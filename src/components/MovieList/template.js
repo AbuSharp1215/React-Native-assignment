@@ -1,15 +1,22 @@
 import React, { PureComponent } from 'react';
 
+
 import {
     Text,
     View,
     FlatList,
-    Image
+    Image,
+    Alert,
+    TouchableOpacity
 }
 from 'react-native'
+import { COLORS } from '../colors';
+
 
 const uri = 'https://api.themoviedb.org/3/movie/'
 const api = '?api_key=0e0c5832e7ae101504307640658e5395&language=en-US'
+
+const navigation = React.createRef();
 
 export class MovieTemplate extends PureComponent{
     constructor(props) {
@@ -19,6 +26,10 @@ export class MovieTemplate extends PureComponent{
         data: {},
         genre_val: [],
       };
+    }
+
+    navigate(name, params) {
+      navigation.current && navigation.current.navigate(name, params);
     }
   
     componentDidMount() {
@@ -33,9 +44,9 @@ export class MovieTemplate extends PureComponent{
           this.setState({ isLoading: false });
         });
     }
-    
-        render(){
-            const { data, genre_val } = this.state;
+
+    template() {
+      const { data, genre_val } = this.state;
             var params = {
                 title:this.props.title,
                 url:this.props.url,
@@ -46,7 +57,10 @@ export class MovieTemplate extends PureComponent{
                 rating:this.props.rateing
             }
             return (
-               
+               <TouchableOpacity  onPress = { () => {
+                 Alert.alert("Hello")
+                // this.props.navigation.navigate('Details' , {data: data})
+              } }>
               <View style={{flex:1, 
                 flexDirection: 'row',
               justifyContent: 'flex-start', 
@@ -55,13 +69,16 @@ export class MovieTemplate extends PureComponent{
               marginVertical:8,
               elevation: 5,
               borderRadius: 6
-              }}>
+              }}
+             
+              >
                 <Image source={ {uri: params.url} }
                     style={ {
                       width:150, 
                       height:200,
                       marginHorizontal:5,
-                      marginVertical:5
+                      marginVertical:5,
+                      borderRadius:10
                     }
                  }
                 />
@@ -77,8 +94,8 @@ export class MovieTemplate extends PureComponent{
                       justifyContent: 'flex-start'
                     }
                   }>
-                    <Text style={{color:'black', fontSize:20}}>{params.title}</Text>
-                  <Text style={{color:'#909090', fontSize:15}}>{params.date} | {params.lang}</Text>
+                    <Text style={{color: COLORS.black, fontSize:20}}>{params.title}</Text>
+                  <Text style={{color: COLORS.grey, fontSize:15}}>{params.date} | {params.lang}</Text>
                   <View
                   style={{
                       flex:1,
@@ -89,7 +106,7 @@ export class MovieTemplate extends PureComponent{
                   {
                       this.state.genre_val.map((item, index) =>{
                           return (
-                            <Text key={index} style={{color:'#909090', fontSize:15}}> - {item.name}</Text>
+                            <Text key={index} style={{color: COLORS.grey, fontSize:15}}> - {item.name}</Text>
                           )
                       })
                   }
@@ -103,14 +120,21 @@ export class MovieTemplate extends PureComponent{
                     }
                   }>
                     
-                  <Text style={{color:'#909090', fontSize:15}}>Rating: {params.rating} out of 10</Text>
-                  <Text style={{color:'#909090', fontSize:15}}>Content: {params.adult?"A":"U"}</Text>
+                  <Text style={{color: COLORS.grey, fontSize:15}}>Rating: {params.rating} out of 10</Text>
+                  <Text style={{color: COLORS.grey, fontSize:15}}>Content: {params.adult?"A":"U"}</Text>
                   </View>
 
                 </View>
                 
               </View>
+              </TouchableOpacity>
 
             )
+    }
+    
+        render(){
+
+          return this.template()
+            
         }
 }

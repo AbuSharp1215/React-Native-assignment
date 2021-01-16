@@ -1,14 +1,17 @@
 import * as React from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MovieList from './src/components/MovieList';
+import MovieDetail from './src/components/MovieDetail';
+import { createStackNavigator } from '@react-navigation/stack';
 
 
-function popular() {
+function popular({navigation}) {
   const uri = 'https://api.themoviedb.org/3/movie/popular?api_key=0e0c5832e7ae101504307640658e5395&page=1';
   return (
-    <MovieList uri={uri}/>
+    <MovieList uri={uri}
+     navigation={navigation}
+    />
   );
 }
 
@@ -27,6 +30,21 @@ function upComing() {
 }
 
 const Tab = createBottomTabNavigator();
+
+const Stack = createStackNavigator();
+
+function StackNav() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Popular" component={popular} />
+        <Stack.Screen name="BottomNav" component={App}/>
+        <Stack.Screen name="Details" component={MovieDetail} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
 
 export default function App() {
   return (

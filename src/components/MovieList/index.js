@@ -48,6 +48,7 @@ export default class MovieList extends PureComponent {
               lang= {item.original_language}
               date= {item.release_date}
               rating= {item.rating}
+              navigation = {this.props.navigation}
               />
               
             )}

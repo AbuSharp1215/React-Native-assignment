@@ -58,8 +58,8 @@ export class MovieTemplate extends PureComponent{
             }
             return (
                <TouchableOpacity  onPress = { () => {
-                 Alert.alert("Hello")
-                // this.props.navigation.navigate('Details' , {data: data})
+                 //Alert.alert("Hello")
+                 this.props.navigation.navigate('Details' , {data: data})
               } }>
               <View style={{flex:1, 
                 flexDirection: 'row',

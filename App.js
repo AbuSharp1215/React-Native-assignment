@@ -15,33 +15,62 @@ function popular({navigation}) {
   );
 }
 
-function topRated() {
+function topRated({navigation}) {
   const uri = 'https://api.themoviedb.org/3/movie/top_rated?api_key=0e0c5832e7ae101504307640658e5395&language=en-US&page=1';
   return (
-    <MovieList uri={uri}/>
+    <MovieList uri={uri}
+    navigation={navigation}
+    />
   );
 }
 
-function upComing() {
+function upComing({navigation}) {
   const uri = 'https://api.themoviedb.org/3/movie/upcoming?api_key=0e0c5832e7ae101504307640658e5395&language=en-US&page=1';
   return (
-    <MovieList uri={uri}/>
+    <MovieList uri={uri}
+    navigation={navigation}
+    />
   );
 }
 
 const Tab = createBottomTabNavigator();
 
-const Stack = createStackNavigator();
+const PopularStack = createStackNavigator();
+
+const TopStack = createStackNavigator();
+
+const UpStack = createStackNavigator();
 
 function StackNav() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Popular" component={popular} />
-        <Stack.Screen name="BottomNav" component={App}/>
-        <Stack.Screen name="Details" component={MovieDetail} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    
+      <PopularStack.Navigator>
+        <PopularStack.Screen name="Popular Movies" component={popular} />
+        <PopularStack.Screen name="Details" component={MovieDetail} />
+      </PopularStack.Navigator>
+    
+  );
+}
+
+function TopStackNav() {
+  return (
+    
+      <TopStack.Navigator>
+        <TopStack.Screen name="Top Rated Movies" component={topRated} />
+        <TopStack.Screen name="Details" component={MovieDetail} />
+      </TopStack.Navigator>
+    
+  );
+}
+
+function UpStackNav() {
+  return (
+    
+      <UpStack.Navigator>
+        <UpStack.Screen name="Upcoming Movies" component={upComing} />
+        <UpStack.Screen name="Details" component={MovieDetail} />
+      </UpStack.Navigator>
+    
   );
 }
 
@@ -50,9 +79,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="Popular" component={popular} />
-        <Tab.Screen name="Top Rated" component={topRated} />
-        <Tab.Screen name="Upcoming" component={upComing} />
+        <Tab.Screen name="Popular" component={StackNav} />
+        <Tab.Screen name="Top Rated" component={TopStackNav} />
+        <Tab.Screen name="Upcoming" component={UpStackNav} />
       </Tab.Navigator>
     </NavigationContainer>
   );

@@ -11,6 +11,7 @@ import {
 }
 from 'react-native'
 import { COLORS } from '../colors';
+import { API } from '../../api';
 
 
 const uri = 'https://api.themoviedb.org/3/movie/'
@@ -48,13 +49,7 @@ export class MovieTemplate extends PureComponent{
     template() {
       const { data, genre_val } = this.state;
             var params = {
-                title:this.props.title,
-                url:this.props.url,
-                adult:this.props.adult,
-                genre:this.props.genre,
-                lang:this.props.lang,
-                date:this.props.date,
-                rating:this.props.rateing
+                lang:this.props.lang
             }
             return (
                <TouchableOpacity  onPress = { () => {
@@ -72,7 +67,7 @@ export class MovieTemplate extends PureComponent{
               }}
              
               >
-                <Image source={ {uri: params.url} }
+                <Image source={ {uri: API.img_path+data.poster_path} }
                     style={ {
                       width:150, 
                       height:200,
@@ -94,8 +89,8 @@ export class MovieTemplate extends PureComponent{
                       justifyContent: 'flex-start'
                     }
                   }>
-                    <Text style={{color: COLORS.black, fontSize:20}}>{params.title}</Text>
-                  <Text style={{color: COLORS.grey, fontSize:15}}>{params.date} | {params.lang}</Text>
+                    <Text style={{color: COLORS.black, fontSize:20}}>{data.title}</Text>
+                  <Text style={{color: COLORS.grey, fontSize:15}}>{data.release_date} | {params.lang}</Text>
                   <View
                   style={{
                       flex:1,
@@ -104,7 +99,7 @@ export class MovieTemplate extends PureComponent{
                   }}
                   >
                   {
-                      this.state.genre_val.map((item, index) =>{
+                      genre_val.map((item, index) =>{
                           return (
                             <Text key={index} style={{color: COLORS.grey, fontSize:15}}> - {item.name}</Text>
                           )
@@ -120,8 +115,8 @@ export class MovieTemplate extends PureComponent{
                     }
                   }>
                     
-                  <Text style={{color: COLORS.grey, fontSize:15}}>Rating: {params.rating} out of 10</Text>
-                  <Text style={{color: COLORS.grey, fontSize:15}}>Content: {params.adult?"A":"U"}</Text>
+                  <Text style={{color: COLORS.grey, fontSize:15}}>Rating: {data.vote_average} out of 10</Text>
+                  <Text style={{color: COLORS.grey, fontSize:15}}>Content: {data.adult?"A":"U"}</Text>
                   </View>
 
                 </View>

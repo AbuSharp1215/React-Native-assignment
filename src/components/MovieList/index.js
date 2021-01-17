@@ -41,13 +41,7 @@ export default class MovieList extends PureComponent {
             renderItem={({ item }) => (
               <MovieTemplate 
               id={item.id}
-              title= {item.title} 
-              url= {'https://image.tmdb.org/t/p/w500'+item.poster_path}
-              adult= {item.adult}
-              genre= {item.genre_ids}
               lang= {item.original_language}
-              date= {item.release_date}
-              rating= {item.rating}
               navigation = {this.props.navigation}
               />
               

@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import {
     View, Image, Text, ScrollView, Alert
 } from 'react-native'
+import { API } from '../../api';
 import { COLORS } from '../colors';
 
 const nologo = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png';
@@ -9,10 +10,6 @@ const nologo = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_ima
 export default class MovieDetail extends PureComponent {
   constructor(props) {
     super(props);
-
-    this.state = {
-      data: {}
-    };
   }
 
 
@@ -27,7 +24,7 @@ export default class MovieDetail extends PureComponent {
       borderRadius: 6
       }}>
         
-        <Image source={ {uri: 'https://image.tmdb.org/t/p/w500'+data.backdrop_path} }
+        <Image source={ {uri: API.img_path+data.backdrop_path} }
             style={ {
               flex:1,
               borderRadius:6,
@@ -39,55 +36,55 @@ export default class MovieDetail extends PureComponent {
         <Text style={{color: COLORS.black, fontSize:20, marginHorizontal:10}}>{data.original_title}</Text>
         <ScrollView style={{flex:1}} >
         <View style={{
-        flexDirection: 'row',
-        justifyContent: 'flex-start', 
-        backgroundColor: 'white',
-        marginHorizontal:10,
-        marginVertical:10,
-        
-        }}>
+                flexDirection: 'row',
+                justifyContent: 'flex-start', 
+                backgroundColor: 'white',
+                marginHorizontal:10,
+                marginVertical:10,
+                
+                }}>
+                  
+                  <View style={{
+                      flex:1,
+                      justifyContent: 'flex-start'
+                    }
+                  }>
+                    
+                  <Text style={{color: COLORS.black, fontSize:20}}>Duration</Text>
+                  <Text style={{color: COLORS.grey, fontSize:15}}>{JSON.stringify(data.runtime)} min</Text>
+                  </View>
           
-          <View style={{
-              flex:1,
-              justifyContent: 'flex-start'
-            }
-          }>
-            
-          <Text style={{color: COLORS.black, fontSize:20}}>Duration</Text>
-          <Text style={{color: COLORS.grey, fontSize:15}}>{JSON.stringify(data.runtime)} min</Text>
-          </View>
-  
-          <View style={{
-              flex:1,
-              justifyContent: 'flex-start',
-              paddingLeft:20
-            }
-          }>
-            
-          <Text style={{color: COLORS.black, fontSize:20}}>Rating</Text>
-          <Text style={{color: COLORS.grey, fontSize:15}}>{JSON.stringify(data.vote_average)} / 10</Text>
-          </View>
-  
-          <View style={{
-              flex:1,
-              justifyContent: 'flex-start'
-            }
-          }>
-            
-          <Text style={{color: COLORS.black, fontSize:20}}>Language</Text>
-          {data.spoken_languages.map((item, index) => {
-             return <Text key={index} style={{color: COLORS.grey, fontSize:15}}> {item.name} </Text>
-          })}
-          </View>
-  
-        </View>
+                  <View style={{
+                      flex:1,
+                      justifyContent: 'flex-start',
+                      paddingLeft:20
+                    }
+                  }>
+                    
+                  <Text style={{color: COLORS.black, fontSize:20}}>Rating</Text>
+                  <Text style={{color: COLORS.grey, fontSize:15}}>{JSON.stringify(data.vote_average)} / 10</Text>
+                  </View>
+          
+                  <View style={{
+                      flex:1,
+                      justifyContent: 'flex-start'
+                    }
+                  }>
+                    
+                  <Text style={{color: COLORS.black, fontSize:20}}>Language</Text>
+                  {data.spoken_languages.map((item, index) => {
+                     return <Text key={index} style={{color: COLORS.grey, fontSize:15}}> {item.name} </Text>
+                  })}
+                  </View>
+          
+                </View>
   
         <View style={{ 
         flexDirection: 'column',
         justifyContent: 'flex-start', 
         backgroundColor: 'white',
         marginHorizontal:10,
-        marginVertical:8,
+        marginVertical:10,
         
         }}>
              <Text style={{color: COLORS.black, fontSize:20}}>Synopsis</Text>
@@ -156,7 +153,7 @@ export default class MovieDetail extends PureComponent {
         justifyContent: 'flex-start', 
         backgroundColor: 'white',
         marginHorizontal:10,
-        marginVertical:8,
+        marginVertical:10,
         
         }}>
              
